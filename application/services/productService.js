@@ -31,7 +31,7 @@ async putASpecificProduct(id, data) {
 async deleteAProduct(id){
     const deletedProduct = await this.productRepository.deleteProductById(id);
     if (!deletedProduct){
-        throw new Error(JSON.stringify({status: 404, message: 'User not found or could not be deleted'}));
+        throw new Error(JSON.stringify({status: 404, message: 'Product not found or could not be deleted'}));
     }
     return deletedProduct;
 }

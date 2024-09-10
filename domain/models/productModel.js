@@ -50,7 +50,7 @@ class Product{
     async deleteProduct(id){
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('productos');
-        const res = await collection.deleteMany({_d: new ObjectId(id)});
+        const res = await collection.deleteMany({_id: new ObjectId(id)});
         return res;
     }
     }
