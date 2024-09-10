@@ -41,17 +41,20 @@ class ProductController {
         }
     }
 
-async deleteASpecificProduct(req, res){
-    try{
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) return res.status(400).json({errors:errors.array()});
-        const product = await this.productService.deleteAProduct(req.params.id);
-        res.status(204).json(product);
-    }catch (error){
-        const errorObj = JSON.parse(error.message);
-        res.status(errorObj.status).json({message: errorObj.message});
+    async deleteASpecificProduct(req, res) {
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+
+            const result = await this.productService.deleteAProduct(req.params.id);
+            res.status(200).json({ message: 'Product deleted' }); // Cambia el código de estado a 200 y envía un mensaje
+        } catch (error) {
+            const errorObj = JSON.parse(error.message);
+            res.status(errorObj.status).json({ message: errorObj.message });
+        }
     }
-}
 
 }
 module.exports = ProductController;

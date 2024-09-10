@@ -47,12 +47,12 @@ class Product{
 
   
 
-    async deleteProduct(id){
-        let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('productos');
-        const res = await collection.deleteMany({_id: new ObjectId(id)});
-        return res;
-    }
+  async deleteProduct(id) {
+    let obj = ConnectToDatabase.instanceConnect;
+    const collection = obj.db.collection('productos');
+    const res = await collection.deleteOne({ _id: new ObjectId(id) }); // Usar deleteOne en lugar de deleteMany
+    return res;
+}
     }
 
 

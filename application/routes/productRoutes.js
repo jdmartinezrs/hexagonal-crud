@@ -10,7 +10,7 @@ const productValidator = new ProductValidator();
 router.get('/:name', productValidator.validateProductName(), productController.getProductByName.bind(productController));
 router.post('/', productValidator.validateProductData(),(req, res)=> productController.postANewProduct(req, res));
 router.put('/:id', productValidator.validateProductUpdateById(),(req,res)=>productController.putAspecificProduct(req,res));
-router.delete('/:id', productValidator.validateProductUpdateById(),(req,res) => productController.deleteASpecificProduct(req,res));
+router.delete('/:id', productValidator.validateProductId(), (req, res) => productController.deleteASpecificProduct(req, res));
 
 
 module.exports = router;

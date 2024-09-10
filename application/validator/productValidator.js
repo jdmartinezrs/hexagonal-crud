@@ -34,17 +34,11 @@ class ProductValidator{
     ];
  };
 
-validateProductId = () => {
-    return[
-        param('id').custom((value,{req}) =>{
-            if (!ObjectId.isValid(value)){
+ validateProductId = () => {
+    return [
+        param('id').custom((value) => {
+            if (!ObjectId.isValid(value)) {
                 throw new Error('Submit a valid ID');
-            }
-            return true;
-        }),
-        query().custom((value,{req})=>{
-            if (Object.keyz(req.query).length>0){
-                throw new Error('Do not send anything in the body')
             }
             return true;
         })

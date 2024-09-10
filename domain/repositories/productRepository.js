@@ -31,14 +31,18 @@ class ProductRepository{
                 }
             }
 
-    async deleteProductById(id){
-        try{
-            const product = new Product();
-            return await product.deleteProduct(id);
-        }catch (error) {
-            throw new Error (JSON.stringify({status: 404, message:'Error deleting product'}))
-        }
-    }
+            async deleteProductById(id) {
+                try {
+                    const product = new Product();
+                    const result = await product.deleteProduct(id);
+                    if (result.deletedCount === 0) {
+                        throw new Error('Product not found');
+                    }
+                    return result;
+                } catch (error) {
+                    throw new Error(JSON.stringify({ status: 404, message: 'Error deleting product' }));
+                }
+            }
 
 }
 

@@ -28,12 +28,12 @@ async putASpecificProduct(id, data) {
     return updateProduct;
 }
 
-async deleteAProduct(id){
-    const deletedProduct = await this.productRepository.deleteProductById(id);
-    if (!deletedProduct){
-        throw new Error(JSON.stringify({status: 404, message: 'Product not found or could not be deleted'}));
+async deleteAProduct(id) {
+    const result = await this.productRepository.deleteProductById(id);
+    if (result.deletedCount === 0) {
+        throw new Error(JSON.stringify({ status: 404, message: 'Product not found or could not be deleted' }));
     }
-    return deletedProduct;
+    return result;
 }
 
 }
