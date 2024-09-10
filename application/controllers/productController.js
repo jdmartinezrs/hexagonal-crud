@@ -6,17 +6,16 @@ class ProductController {
         this.productService = new ProductService(); 
     }
 
-    async getProducts(req, res){
-        try{
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array()});
-            const product = await this.productService.getProductByItsName(req.params.id);
-            res.status(200).json(product);
-        } catch (error){
-            const errorObj = JSON.parse(error.message);
-            res.status(errorObj.status).json({message: errorObj.message});
+    async getProductByName(req, res) {
+        try {
+        const { name } = req.params;
+        const product = await this.productService.getProductByItsName(name);
+        res.json(product);
+        } catch (error) {
+        const { status, message } = JSON.parse(error.message);
+        res.status(status).json({ message });
         }
-    }
+        }
 
     async postANewProduct(req, res){
         try {

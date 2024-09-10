@@ -5,13 +5,13 @@ constructor(){
     this.productRepository = new ProductRepository();
 }
 
-async getProductByItsName(productName){
+async getProductByItsName(productName) {
     const product = await this.productRepository.getProduct(productName);
-    if (!product){
-        throw new Error(JSON.stringify({status:404, message: 'User not found'}));
+    if (!product) {
+    throw new Error(JSON.stringify({status: 404, message: 'Product not found'}));
     }
     return product;
-}
+    }
 
 async postNewProduct(data){
     return await this.productRepository.saveProduct(data);

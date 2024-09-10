@@ -2,14 +2,19 @@ const {body, query, param}= require("express-validator");
 const {ObjectId} = require ("mongodb");
 
 class ProductValidator{
-    validateProductData = () =>{
-        return[
-            body('nombre').notEmpty().withMessage('The name is mandatory'),
-            body('tipo_producto').isString().withMessage('the product type must be a string'),
-            body('stock').isNumeric().notEmpty().withMessage('The stock is mandatory')
-
+    validateProductData() {
+        return [
+        body('nombre').notEmpty().withMessage('The name is mandatory'),
+        body('tipo_producto').isString().withMessage('The product type must be a string'),
+        body('stock').isNumeric().notEmpty().withMessage('The stock is mandatory')
         ];
-    };
+        }
+        
+        validateProductName() {
+        return [
+        param('name').notEmpty().withMessage('Product name is required')
+        ];
+        }
 
  validateProductDataEmpty = () =>{
     return [

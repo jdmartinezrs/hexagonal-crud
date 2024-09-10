@@ -3,32 +3,36 @@ const {ObjectId}= require("mongodb");
 const ConnectToDatabase = require("../../infrastructure/database/mongodb")
 
 class Product{
-    async getProductByName (productName){
-        let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('productos');
-        const [res] = await collection.aggregate([
-            {
-              $match: { nombre: productName }
-            }
-          ]).toArray();
-          return res;
+  async getProductByName(productName) {
+    let obj = ConnectToDatabase.instanceConnect;
+    const collection = obj.db.collection('productos');
+    const [res] = await collection.aggregate([
+    {
+    $match: { nombre: productName }
+    }
+    ]).toArray();
+    return res;
     }
 
-    async postProduct(nombre, tipo_producto, stock) {
-        
-          const obj = await new ConnectToDatabase().connect();
-          const collection = obj.db.collection('productos');
-    
-          const productData = {
-            nombre: nombre,
-            tipo_producto: tipo_producto,
-            stock: stock
-          };
-    
-          const res = await collection.insertMany([productData]);
-          return res;
+    async postProduct(data) {
+      const obj = ConnectToDatabase.instanceConnect; // Usa directamente si ya está conectado
       
-      }
+      const {nombre, tipo_producto, stock} = data
+
+      const productData = {
+        nombre: nombre,
+        tipo_producto: tipo_producto,
+        stock: stock
+      };
+    
+      console.log('Product Data:', productData); // Depuración: Verifica la estructura
+    
+      const collection = obj.db.collection('productos');
+      const res = await collection.insertOne(productData);
+    
+      return res;
+    }
+    
 
     async putProduct(id, updateData, upsert){
 
