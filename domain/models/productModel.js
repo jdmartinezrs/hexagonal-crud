@@ -34,15 +34,18 @@ class Product{
     }
     
 
-    async putProduct(id, updateData, upsert){
+    async putProduct(id, updateData, upsert) {
+      let obj = ConnectToDatabase.instanceConnect;
+      const collection = obj.db.collection('productos');
+      const res = await collection.updateOne(
+          { _id: new ObjectId(id) },
+          { $set: updateData },
+          { upsert: upsert }
+      );
+      return res;
+  }
 
-        let obj = ConnectToDatabase.instanceConnect;
-        const collection = obj.db.collection('productos');
-        const res = await collection.updateOne({_id: new ObjectId(id)},
-        {$set: updateData}, upsert);
-        return res;
-    }
-
+  
 
     async deleteProduct(id){
         let obj = ConnectToDatabase.instanceConnect;

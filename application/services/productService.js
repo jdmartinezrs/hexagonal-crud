@@ -5,24 +5,27 @@ constructor(){
     this.productRepository = new ProductRepository();
 }
 
-async getProductByItsName(productName) {
+async getProductByItsName(productName){
     const product = await this.productRepository.getProduct(productName);
-    if (!product) {
-    throw new Error(JSON.stringify({status: 404, message: 'Product not found'}));
+    if (!product){
+        throw new Error(JSON.stringify({status:404, message: 'User not found'}));
     }
     return product;
-    }
+}
 
 async postNewProduct(data){
     return await this.productRepository.saveProduct(data);
 }
 
-async putASpecificProduct(id,data){
-    const updateProduct = await this.productRepository.updateProductById(id,data);
-    if (!updateProduct){
-        throw new Error(JSON.stringify({status: 404, message: 'Product not found or could not be updated'}));
+async putASpecificProduct(id, data) {
+    if (!id || !data) {
+        throw new Error(JSON.stringify({ status: 400, message: 'Invalid input' }));
     }
-return updateProduct;
+    const updateProduct = await this.productRepository.updateProductById(id, data);
+    if (!updateProduct || updateProduct.matchedCount === 0) {
+        throw new Error(JSON.stringify({ status: 404, message: 'Product not found or could not be updated' }));
+    }
+    return updateProduct;
 }
 
 async deleteAProduct(id){

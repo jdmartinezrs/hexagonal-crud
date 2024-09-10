@@ -52,24 +52,33 @@ validateProductId = () => {
 };
 
 validateProductUpdateById = () => {
-    return[
-        body('nombre').notEmpty().withMessage('The name is mandatory'),
-        body('tipo_producto').isString().withMessage('the product type must be a string'),
-        body('stock').isNumeric().notEmpty().withMessage('The stock is mandatory'),
-
-        param('id').custom((value, {req}) =>{
-            if (!ObjectId.isValid(value)){
+    return [
+        // Validación del parámetro 'id' al inicio
+        param('id').custom((value) => {
+            if (!ObjectId.isValid(value)) {
                 throw new Error('Submit a valid ID');
             }
             return true;
         }),
-        query().custom((value,{req})=>{
-            if (Object.keys(req.query).length >0){
-                throw new Error ('Dont send anything in the url');
+        
+        // Validación de los campos del cuerpo
+        body('nombre')
+            .notEmpty().withMessage('The name is mandatory'),
+        
+        body('tipo_producto')
+            .isString().withMessage('The product type must be a string'),
+        
+        body('stock')
+            .isNumeric().withMessage('The stock must be a number')
+            .notEmpty().withMessage('The stock is mandatory'),
+
+        // Validación de query params si es necesario
+        query().custom((value, { req }) => {
+            if (Object.keys(req.query).length > 0) {
+                throw new Error('Don\'t send anything in the URL');
             }
             return true;
         })
-        
     ];
 
 };

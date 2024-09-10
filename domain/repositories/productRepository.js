@@ -20,15 +20,16 @@ class ProductRepository{
             }
         }
 
-    async updateProductById(id, updateData){
-        try{
-            const product = new product();
-            return await User.putProduct(id, updateData, {upsert:true});
-        }catch (error) {
-            throw new Error(JSON.stringify({status: 500, message: 'Error updating product'}));
-
-        }
-    }
+            async updateProductById(id, updateData) {
+                try {
+                    const product = new Product(); // Asegúrate de que la clase se instancie correctamente
+                    const result = await product.putProduct(id, updateData, true);
+                    return result;
+                } catch (error) {
+                    console.error('Error updating product:', error);
+                    throw new Error(JSON.stringify({ status: 500, message: 'Error updating product' }));
+                }
+            }
 
     async deleteProductById(id){
         try{
