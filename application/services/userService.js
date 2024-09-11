@@ -24,11 +24,9 @@ class UserService {
         const [user] = await this.userRepository.getNick(body);
         if(!user) throw new Error(JSON.stringify({status: 404, message: 'User not found service'}))
         const token  = await this.userRepository.getPassword(body.password, user);
-    console.log(token)
         if (!token) throw new Error(JSON.stringify({status: 404, message: 'Password incorrect service'}));
         return token;
     }
-
 
 
     async updateUser(id, data) {

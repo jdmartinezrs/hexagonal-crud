@@ -2,6 +2,7 @@ const ConnectToDatabase = require('./infrastructure/database/mongodb');
 const createServer = require('./infrastructure/server/server');
 
 const startApp = async () => {
+    
     let connectToDatabase = new ConnectToDatabase();
     await connectToDatabase.connectOpen();
     const app = createServer();
