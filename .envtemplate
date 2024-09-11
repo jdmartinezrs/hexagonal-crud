@@ -8,3 +8,17 @@ MONGO_PWD="rojas"
 MONGO_HOST="junction.proxy.rlwy.net"
 MONGO_PORT=31290
 MONGO_DB_NAME="campus"
+
+
+
+EXPRESS_PORT=3000
+EXPRESS_HOST="localhost"
+
+
+MONGO_ACCESS="mongodb://"
+MONGO_USER="rojas"
+MONGO_PWD="developerOne"
+MONGO_HOST="junction.proxy.rlwy.net"
+MONGO_PORT=31290
+MONGO_DB_NAME="campus"
+JWT_SECRET="juandavidmartinezrojas"

@@ -29,6 +29,19 @@ class UserValidator {
         ];
     };
 
+    validateUserLogin = () => {
+        return [
+            body('nick').notEmpty().isString().withMessage('Send the nickname you will have in the system'),
+            body('password').notEmpty().isLength({min: 8}).isString().withMessage('It must be higher than 8'),
+            query().custom((value, { req }) => {
+                if (Object.keys(req.query).length > 0) {
+                    throw new Error(`Don't send anything in the URL`);
+                }
+                return true;
+            })
+        ];
+    };
+
     validateUserDataEmpty = () => {
         return [
             body().custom((value, { req }) => {

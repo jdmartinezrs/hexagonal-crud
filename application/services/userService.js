@@ -19,6 +19,18 @@ class UserService {
         return await this.userRepository.save(data);
     }
 
+
+    async getUserByNickAndPassword(body) {
+        const [user] = await this.userRepository.getNick(body);
+        if(!user) throw new Error(JSON.stringify({status: 404, message: 'User not found service'}))
+        const token  = await this.userRepository.getPassword(body.password, user);
+    console.log(token)
+        if (!token) throw new Error(JSON.stringify({status: 404, message: 'Password incorrect service'}));
+        return token;
+    }
+
+
+
     async updateUser(id, data) {
         const updatedUser = await this.userRepository.updateById(id, data);
         if (!updatedUser) {
