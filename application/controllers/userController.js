@@ -23,6 +23,10 @@ class UserController {
         try {
             const errors = validationResult(req);
             if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+            delete req.body.password
+            let{passwordHash:pass} = req.body
+            delete req.body.passwordHash
+            req.body.password = pass;
             const user = await this.userService.createUser(req.body);
             res.status(201).json(user);
         } catch (error) {
