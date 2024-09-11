@@ -12,7 +12,7 @@ class User{
     async aggregate (data) {
         let obj = ConnectToDatabase.instanceConnect;
         const collection = obj.db.collection('cliente');
-        const res = await collection.aggregate([data]).toArray();
+        const res = await collection.aggregate([...data]).toArray();
         return res;
     }
 

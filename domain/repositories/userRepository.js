@@ -9,7 +9,7 @@ class UserRepository {
             const user = new User();
             return await user.findById(id);
         } catch (error) {
-            throw new Error(JSON.stringify({status: 400, message: 'Error retrieving user'}));
+            throw new Error(JSON.stringify({ status: 400, message: 'Error retrieving user' }));
         }
     }
 
@@ -18,33 +18,44 @@ class UserRepository {
             const user = new User();
             return await user.insert(userData);
         } catch (error) {
-            throw new Error(JSON.stringify({status: 500, message: 'Error saving user'}));
+            throw new Error(JSON.stringify({ status: 500, message: 'Error saving user' }));
         }
     }
 
     async getNick(body) {
         try {
             const user = new User();
-            let {nick} = body;
-            let query = {
-                $match:{
-                    nick
+            let { nick } = body;
+            let query = [
+                {
+                    $match: {
+                        nick
+                    }
+                }, {
+                    $project: {
+                        _id: 0,
+                        role: 0,
+                        email: 0
+                        
+
+                    }
                 }
-            }
+            ]
             return await user.aggregate(query);
         } catch (error) {
-            throw new Error(JSON.stringify({status: 400, message: 'Error retrieving user repository'}));
+            throw new Error(JSON.stringify({ status: 400, message: 'Error retrieving user repository' }));
         }
     }
 
 
     async getPassword(password, user) {
-       let {password:pass} = user
+        let { password: pass } = user
+        delete user.password
         const isMatch = await bcrypt.compare(password, pass);
-        if(!isMatch) throw new Error(JSON.stringify({status: 401, message: 'Not Authorized'}));
-        
-        
-        return jwt.sign({user},process.env.JWT_SECRET,{expiresIn: '5m'})
+        if (!isMatch) throw new Error(JSON.stringify({ status: 401, message: 'Not Authorized' }));
+
+
+        return jwt.sign( user , process.env.JWT_SECRET, { expiresIn: '5m' })
     }
 
 
@@ -56,7 +67,7 @@ class UserRepository {
             // { upsert: true } // Si es verdadero, inserta un nuevo documento si no existe
             return await user.findByIdAndUpdate(id, updateData, { upsert: true });
         } catch (error) {
-            throw new Error(JSON.stringify({status: 500, message: 'Error updating user'}));
+            throw new Error(JSON.stringify({ status: 500, message: 'Error updating user' }));
         }
     }
 
@@ -65,7 +76,7 @@ class UserRepository {
             const user = new User();
             return await user.findByIdAndDelete(id);
         } catch (error) {
-            throw new Error(JSON.stringify({status: 404, message: 'Error deleting user'}));
+            throw new Error(JSON.stringify({ status: 404, message: 'Error deleting user' }));
         }
     }
 
