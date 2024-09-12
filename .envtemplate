@@ -8,7 +8,7 @@ MONGO_PWD="rojas"
 MONGO_HOST="junction.proxy.rlwy.net"
 MONGO_PORT=31290
 MONGO_DB_NAME="campus"
-
+EXPRESS_STATIC="src"
 
 
 EXPRESS_PORT=3000

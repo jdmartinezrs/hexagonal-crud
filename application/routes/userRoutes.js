@@ -1,5 +1,6 @@
-// Define las rutas de la aplicación y mapea las URLs a los controladores.
+
 const express = require('express');
+const path = require('path');
 const UserController = require('../controllers/userController');
 const UserValidator = require('../validator/userValidator');
 const {auth}= require('../middelware/authenticateToken')
@@ -7,6 +8,12 @@ const router = express.Router();
 const userController = new UserController();
 const userValidator = new UserValidator();
 const cookieParser = require('cookie-parser')
+
+
+
+router.get('/',(req,res)=>{
+    res.sendFile(path.join(req.__dirname, process.env.EXPRESS_STATIC,'/index.html'));
+});
 
 router.get('/:id',auth, userValidator.validateUserId(), (req, res) => userController.getUser(req, res));
 router.post('/', userValidator.validateUserData(), (req, res) => userController.createUser(req, res));
