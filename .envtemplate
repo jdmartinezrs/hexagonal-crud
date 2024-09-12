@@ -1,19 +1,7 @@
 EXPRESS_PORT=3000
 EXPRESS_HOST="localhost"
-
-
-MONGO_ACCESS="mongodb://"
-MONGO_USER="martinez"
-MONGO_PWD="rojas"
-MONGO_HOST="junction.proxy.rlwy.net"
-MONGO_PORT=31290
-MONGO_DB_NAME="campus"
+EXPRESS_EXPIRE=50000
 EXPRESS_STATIC="src"
-
-
-EXPRESS_PORT=3000
-EXPRESS_HOST="localhost"
-
 
 MONGO_ACCESS="mongodb://"
 MONGO_USER="rojas"
