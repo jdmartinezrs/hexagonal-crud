@@ -3,11 +3,11 @@ const express = require('express');
 const path = require('path');
 const UserController = require('../controllers/userController');
 const UserValidator = require('../validator/userValidator');
-const {auth}= require('../middelware/authenticateToken')
 const router = express.Router();
 const userController = new UserController();
 const userValidator = new UserValidator();
 const cookieParser = require('cookie-parser')
+const {auth}= require('../middelware/authenticateToken')
 
 
 
