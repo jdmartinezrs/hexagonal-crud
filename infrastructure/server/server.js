@@ -1,12 +1,12 @@
 const express = require('express');
 const path = require('path');
 const userRoutes = require('../../application/routes/userRoutes');
-
 const productRoutes = require('../../application/routes/productRoutes');
 const { jsonParseErrorHandler } = require('../middlewares/errorHandling');
 const { limiTotal } = require('../middlewares/rateLimit');
 const {auth} = require('../../application/middelware/authenticateToken');
 const cookieParser = require ('cookie-parser');
+
 const createServer = (__dirname) => {
 
 const app = express();
@@ -26,13 +26,11 @@ app.use('/users', (req, res, next)=>{
     next();
 },userRoutes);
 
-//, cookieParser(),auth, 
 
-app.use('/home', (req, res, next)=>{
+app.use('/home', cookieParser(),auth,(req, res, next)=>{
     req.__dirname = __dirnames;
     next();
 },productRoutes);
-
 
 
 app.use('/product', productRoutes);
@@ -40,5 +38,6 @@ return app;
 };
 
 module.exports = createServer;
+
 
 ////change////
