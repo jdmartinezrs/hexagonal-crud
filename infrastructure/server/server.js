@@ -5,6 +5,7 @@ const productRoutes = require('../../application/routes/productRoutes');
 const { jsonParseErrorHandler } = require('../middlewares/errorHandling');
 const { limiTotal } = require('../middlewares/rateLimit');
 const {auth} = require('../../application/middelware/authenticateToken');
+const sessionAuth = require('../../application/middelware/sessionLogin');
 const cookieParser = require ('cookie-parser');
 
 const createServer = (__dirname) => {
@@ -27,7 +28,7 @@ app.use('/users', (req, res, next)=>{
 },userRoutes);
 
 
-app.use('/home', cookieParser(),auth,(req, res, next)=>{
+app.use('/home',sessionAuth, auth,(req, res, next)=>{
     req.__dirname = __dirnames;
     next();
 },productRoutes);
