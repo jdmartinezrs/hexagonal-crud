@@ -55,7 +55,7 @@ class UserRepository {
         if (!isMatch) throw new Error(JSON.stringify({ status: 401, message: 'Not Authorized' }));
         
         
-        return jwt.sign( user , process.env.JWT_SECRET, { expiresIn: `${process.env.EXPRESS_EXPIRE}ms` })
+        return jwt.sign( user , process.env.KEY_SECRET, { expiresIn: `${process.env.EXPRESS_EXPIRE}ms` })
     }
 
 

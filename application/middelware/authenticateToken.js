@@ -17,7 +17,7 @@ exports.auth = (req, res, next) => {
         return res.redirect("/users");
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
+    jwt.verify(token, process.env.KEY_SECRET, (err, payload) => {
         if (err) {
             console.error("JWT verification failed:", err);
             return res.redirect("/users");

@@ -4,11 +4,11 @@ const sessionAuth = require('express').Router();
 
 
 module.exports = sessionAuth.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.KEY_SECRET,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
-        secure:false,
+        secure:true,
         maxAge: parseInt(process.env.EXPRESS_EXPIRE)
     }
 }))

@@ -1,3 +1,6 @@
+const https = require('https');
+const fs = require('fs');
+
 const ConnectToDatabase = require('./infrastructure/database/mongodb');
 const createServer = require('./infrastructure/server/server');
 
@@ -8,10 +11,14 @@ const startApp = async () => {
 
     const app = createServer(__dirname);
 
-  
 
-    app.listen({port: process.env.EXPRESS_PORT, host:process.env.EXPRESS_HOST}, () => {
-        console.log(`http://${process.env.EXPRESS_HOST}:${process.env.EXPRESS_PORT}`);
+    const httpsServer = https.createServer({
+        key: fs.readFileSync('./private.key'),
+        cert: fs.readFileSync('./certificate.crt')
+    }, app);
+
+    httpsServer.listen({port: process.env.EXPRESS_PORT, host:process.env.EXPRESS_HOST}, () => {
+        console.log(`https://${process.env.EXPRESS_HOST}:${process.env.EXPRESS_PORT}`);
     });
 };
 
