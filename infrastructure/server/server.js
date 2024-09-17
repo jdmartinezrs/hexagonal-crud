@@ -1,5 +1,8 @@
 const express = require('express');
+const passport = require('passport');
 const path = require('path');
+const configPassportGoogleOAuth = require('../middlewares/googleOAuth');
+
 const indexRouter = require('../../application/routes/indexRouter');
 const userRoutes = require('../../application/routes/userRoutes');
 const loginRouter = require('../../application/routes/loginRouter');
@@ -14,7 +17,12 @@ const cookieParser = require ('cookie-parser');
 const createServer = () => {
 
 const app = express();
+
 app.use(express.json());
+app.use(passport.initialize());
+app.use(passport.session());
+configPassportGoogleOAuth(passport);
+
 app.use(jsonParseErrorHandler);
 app.use(limiTotal);
 
