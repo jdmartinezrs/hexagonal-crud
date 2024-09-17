@@ -14,7 +14,7 @@ const{versionMiddleware} = require('../middelware/version')
 
 
 router.get('/',(req,res)=>{
-    res.sendFile(path.join(req.__dirname, process.env.EXPRESS_STATIC,'/index.html'));
+    res.sendFile(path.join( process.env.EXPRESS_STATIC,'/index.html'));
 });
 router.get('/:id',auth, userValidator.validateUserId(), (req, res) => userController.getUser(req, res));
 router.get('/search', auth, (req, res) => userController.searchUsers(req, res));

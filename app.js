@@ -9,7 +9,7 @@ const startApp = async () => {
     let connectToDatabase = new ConnectToDatabase();
     await connectToDatabase.connectOpen();
 
-    const app = createServer(__dirname);
+    const app = createServer();
 
 
     const httpsServer = https.createServer({
