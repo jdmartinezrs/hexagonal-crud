@@ -14,37 +14,49 @@ const {auth} = require('../../application/middelware/authenticateToken');
 const sessionAuth = require('../../application/middelware/sessionLogin');
 const cookieParser = require ('cookie-parser');
 const googleOAuth = require('../middlewares/googleOAuth');
+
+
+
 const session = require('express-session');
+
 const createServer = () => {
+    const app = express();
 
-const app = express();
+    app.use(express.json());
+    app.use(cookieParser());
 
-app.use(express.json());
-app.use(passport.initialize());
-app.use(passport.session());
-configPassportGoogleOAuth(passport);
+    // Configure session
+    app.use(session({
+        secret: process.env.SESSION_SECRET || 'your-default-secret', // Replace with your secret
+        resave: false, // Avoids resaving session if unmodified
+        saveUninitialized: false, // Do not save uninitialized sessions
+        cookie: { secure: process.env.NODE_ENV === 'production' } // Set to true in production
+    }));
 
-app.use(jsonParseErrorHandler);
-app.use(limiTotal);
+    // Initialize Passport
+    configPassportGoogleOAuth(passport);
+    app.use(passport.initialize());
+    app.use(passport.session());
 
+    app.use(jsonParseErrorHandler);
+    app.use(limiTotal);
 
+    // Static file serving
+    app.use('/css', express.static(path.join(process.env.EXPRESS_STATIC, 'css')));
+    app.use('/js', express.static(path.join(process.env.EXPRESS_STATIC, 'js')));
+    app.use('/storage', express.static(path.join(process.env.EXPRESS_STATIC, 'storage')));
 
-app.use('/css', express.static(path.join( process.env.EXPRESS_STATIC, 'css')));
-app.use('/js', express.static(path.join( process.env.EXPRESS_STATIC, 'js')));
-app.use('/storage', express.static(path.join( process.env.EXPRESS_STATIC, 'storage')));
+    // Define routes
+    app.use('/', indexRouter);
+    app.use('/login', loginRouter);
+    app.use('/createAccount', createAccountRouter);
+    app.use('/users', userRoutes);
+    app.use('/home', productRoutes);
+    app.use('/product', productRoutes);
 
-app.use('/',indexRouter);
-app.use('/login',configPassportGoogleOAuth, passport.initialize(), passport.session(),loginRouter);
-app.use('/createAccount',createAccountRouter);
-
-
-
-
-app.use('/users',userRoutes);
-app.use('/home',productRoutes);
-app.use('/product', productRoutes);
-return app;
+    return app;
 };
+
 
 module.exports = createServer;
 
