@@ -28,7 +28,7 @@ router.post('/login' ,versionMiddleware("1.0.0"), cookieParser(), userValidator.
 
 
 
-router.put('/:id', auth, userValidator.validateUserUpdateDataById(), (req, res) => userController.updateUser(req, res));
+router.put('/:id', auth, userValidator.validateUserUpdateDataById() ,express.json(), (req, res) => userController.updateUser(req, res));
 router.delete('/:id', auth, userValidator.validateUserId(), (req, res) => userController.deleteUser(req, res));
 
 

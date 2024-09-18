@@ -1,4 +1,6 @@
 const session = require('express-session');
+const sessionPassport = require('passport');
+
 const sessionAuth = require('express').Router();
 
 

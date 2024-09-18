@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/x-icon" href="./storage/img/MVC.webp">
+    <script defer type="module" src="./js/module/index.js"></script>
+    <title>MVC</title>
+</head>
+<body>
+    <body>
+        <span class="message">Hexagonal with Express.js</span>
+        <div class="container">
+            <div class="admin-product-form-container">
+                 <form id="myForm" action="/user/v1" method="POST"> <!-- enctype="multipart/form-data" -->
+                    <h3>add a new info</h3>
+                    <input type="number" placeholder="Enter the product name" name="name" class="box">
+                    <input type="text" placeholder="Enter the products brand" name="brand" class="box">
+                    <input type="text" placeholder="Enter the product description" name="description " class="box">
+                    <input type="file" placeholder="Enter file" accept="image/png, image/jpg "name="product_image" class="box">
+                    
+                </form>
+            </div>
+            <div class="product-display">
+                <table class="product-display-table">
+                    <thead>
+                        <tr>
+                            <td>Product Name</td>
+                            <td>Product brand</td>
+                            <td>Product Description</td>
+                            <td>Action</td>
+                         
+                        </tr>
+                    </thead>
+                    <tbody id="myTbody">
+                        <!-- <tr>
+                            <td><img src="//" height="100" alt=""></td>
+                            <td contenteditable></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <a href="#" class="btn"> edit </a>
+                                <a href="#" class="btn"> delete </a>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</body>
+</html>

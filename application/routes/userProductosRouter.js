@@ -19,4 +19,7 @@ router.get("v2.0.0", (req,res)=>{
     res.sendFile(path.join(process.env.EXPRESS_STATIC, "viwes/home.html"))
 })
 
+
+router.post("/", (req,res)=>{})
+
 module.exports = router;

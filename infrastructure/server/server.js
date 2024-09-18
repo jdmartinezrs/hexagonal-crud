@@ -1,7 +1,7 @@
 const express = require('express');
 const passport = require('passport');
 const path = require('path');
-
+const sessionGoogleOAuth = require("../../infrastructure/middlewares/sessionOAuth");
 const indexRouter = require('../../application/routes/indexRouter');
 const loginRouter = require('../../application/routes/loginRouter');
 const userRoutes = require('../../application/routes/userRoutes');
@@ -13,6 +13,7 @@ const { limiTotal } = require('../middlewares/rateLimit');
 
 const createServer = () => {
     const app = express();
+
     app.use(express.json());
 
     app.use(jsonParseErrorHandler);
@@ -23,7 +24,7 @@ const createServer = () => {
 
     
     app.use('/', indexRouter)
-    app.use('/login', passport.initialize(), passport.session(), loginRouter);
+    app.use('/login', sessionGoogleOAuth,passport.initialize(), passport.session(), loginRouter);
     app.use('/createAccount', createAccountRouter);
     app.use('/users', userRoutes);
     app.use('/home', productRoutes);
