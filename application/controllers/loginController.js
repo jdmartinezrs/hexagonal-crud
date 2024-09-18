@@ -25,7 +25,7 @@ exports.googleAuthCallback = (req, res, next) => {
                 return next(err);
             }
             console.log('Usuario autenticado:', user);
-            return res.redirect('/dashboard');
+            return res.redirect('/home/v2.0.0');
         });
     })(req, res, next);
 };

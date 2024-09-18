@@ -7,9 +7,9 @@ module.exports = (passport) => {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            // Fetch the user from your database here if needed
+           
             console.log(id);
-            done(null, id); // Adjust as needed to return the user object
+            done(null, id); 
         } catch (err) {
             done(err, null);
         }

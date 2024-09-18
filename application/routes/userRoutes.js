@@ -3,19 +3,21 @@ const express = require('express');
 const path = require('path');
 const UserController = require('../controllers/userController');
 const UserValidator = require('../validator/userValidator');
-const router = express.Router();
-const userController = new UserController();
-const userValidator = new UserValidator();
+
 const cookieParser = require('cookie-parser')
-const {auth}= require('../middelware/authenticateToken')
+const {auth, authCookie}= require('../middelware/authenticateToken')
 const sessionAuth= require('../middelware/sessionLogin')
 const{versionMiddleware} = require('../middelware/version')
 
+const router = express.Router({mergeParams: true});
+const userController = new UserController();
+const userValidator = new UserValidator();
 
 
-router.get('/',(req,res)=>{
-    res.sendFile(path.join( process.env.EXPRESS_STATIC,'/index.html'));
-});
+//router.get('/',(req,res)=>{
+ //   res.sendFile(path.join( process.env.EXPRESS_STATIC,'/index.html'));
+//});
+
 router.get('/:id',auth, userValidator.validateUserId(), (req, res) => userController.getUser(req, res));
 router.get('/search', auth, (req, res) => userController.searchUsers(req, res));
 
