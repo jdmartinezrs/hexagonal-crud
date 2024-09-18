@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const path = require('path');
 const configPassportGoogleOAuth = require('../middlewares/googleOAuth');
-
+const sessionGogleOAuth = require('../middlewares/sessionOAuth')
 const indexRouter = require('../../application/routes/indexRouter');
 const userRoutes = require('../../application/routes/userRoutes');
 const loginRouter = require('../../application/routes/loginRouter');
@@ -13,7 +13,8 @@ const { limiTotal } = require('../middlewares/rateLimit');
 const {auth} = require('../../application/middelware/authenticateToken');
 const sessionAuth = require('../../application/middelware/sessionLogin');
 const cookieParser = require ('cookie-parser');
-
+const googleOAuth = require('../middlewares/googleOAuth');
+const session = require('express-session');
 const createServer = () => {
 
 const app = express();
@@ -33,7 +34,7 @@ app.use('/js', express.static(path.join( process.env.EXPRESS_STATIC, 'js')));
 app.use('/storage', express.static(path.join( process.env.EXPRESS_STATIC, 'storage')));
 
 app.use('/',indexRouter);
-app.use('/login',loginRouter);
+app.use('/login',configPassportGoogleOAuth, passport.initialize(), passport.session(),loginRouter);
 app.use('/createAccount',createAccountRouter);
 
 
