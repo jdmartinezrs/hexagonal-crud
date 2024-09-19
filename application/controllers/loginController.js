@@ -1,9 +1,7 @@
 const passport = require('passport');
 //const path = require('path');
 
-
-
-
+ 
 exports.googleAuthCallback = (req, res, next) => {
     passport.authenticate('google', async (err, user, info) => {
         if (err) {

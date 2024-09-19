@@ -3,11 +3,17 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 module.exports = (passport) => {
 
   passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user.id);
   });
 
-  passport.deserializeUser((id, done) => {
-    done(null, user);
+  passport.deserializeUser(async (id, done) => {
+    try{
+      console.log(id);
+      done(null, id);
+    } catch (err){
+      done(err, null);
+    }
+    
   });
 
   passport.use(new GoogleStrategy({

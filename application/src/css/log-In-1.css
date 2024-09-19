@@ -50,7 +50,7 @@ main{
 }
 
 .login input,
-.section__social button {
+.section__social a {
     margin-bottom: 22px;
     border: none;
     outline: none;
@@ -108,7 +108,7 @@ main{
     gap: 15px;
 }
 
-.section__social button{
+.section__social a{
     display: flex;
     align-items: center;
     justify-content: space-around;

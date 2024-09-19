@@ -3,24 +3,34 @@
 
 const jwt = require('jsonwebtoken');
 
-exports.auth = (req, res, next) => {
-    let authHeader = req.headers.authorization || req.cookies.token;
+exports.authCookie = (req, res, next) => {
+    let authHeader = undefined;
 
-    if (!authHeader) {
-        return res.redirect("/");
-    }
-    const token = authHeader.startsWith('Bearer ') ? authHeader.split(' ')[1] : authHeader;
-    if (!token) {
-        return res.redirect("/");
-    }
+    if (req.headers.authorization) authHeader= req.headers.authorization
+    if(req.cookies.token)authHeader = req.cookies.token
+    const token = authHeader && authHeader.split(' ')[1];
+    if(!token) return res.redirect("/users")
+
     jwt.verify(token, process.env.KEY_SECRET, (err, payload) => {
-        if (err) {
-            console.error("JWT verification failed:", err);
-            return res.redirect("/users");
-        }
-        // Puedes hacer algo con el payload aquí si lo necesitas
-        // console.log(payload);
-        next();
-    });
-};
+        if (err) return res.redirect("/users")
+            
+            next();
+        });
+    }
+
+    exports.auth = (req, res, next)=>{
+        let authHeader = undefined;
+        if(req.headers.authorization) authHeader = req.headers.authorization
+        if(req.session.token) authHeader = req.session.token
+
+        const token = authHeader && authHeader.split(' ')[1];
+        if(!token) return res.redirect("/users")
+
+        jwt.verify(token, process.env.KEY_SECRET,(err,payload)=>{
+            if(err)return res.redirect('/users')
+            next();
+        })
+    }
+
+
 

@@ -1,12 +1,13 @@
 const express = require('express');
 const passport = require('passport');
-const path = require('path');
 const sessionGoogleOAuth = require("../../infrastructure/middlewares/sessionOAuth");
+const path = require('path');
+
 const indexRouter = require('../../application/routes/indexRouter');
 const loginRouter = require('../../application/routes/loginRouter');
 const userRoutes = require('../../application/routes/userRoutes');
 const createAccountRouter = require('../../application/routes/createAccountRouter');
-const productRoutes = require('../../application/routes/productRoutes');
+const productRoutes = require('../../application/routes/userProductosRouter');
 const { jsonParseErrorHandler } = require('../middlewares/errorHandling');
 const { limiTotal } = require('../middlewares/rateLimit');
 
@@ -23,12 +24,12 @@ const createServer = () => {
     app.use('/storage', express.static(path.join(process.env.EXPRESS_STATIC, 'storage')));
 
     
-    app.use('/', indexRouter)
+    app.use('/', indexRouter);
     app.use('/login', sessionGoogleOAuth,passport.initialize(), passport.session(), loginRouter);
     app.use('/createAccount', createAccountRouter);
     app.use('/users', userRoutes);
-    app.use('/home', productRoutes);
-    app.use('/product', productRoutes);
+    app.use('/home', sessionGoogleOAuth,productRoutes);
+    //app.use('/product');
 
     return app;
 };

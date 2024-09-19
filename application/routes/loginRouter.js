@@ -1,5 +1,6 @@
 const passport = require('passport');
-const configPassportGoogleOAuth = require('./googleOAuth');
+const configPassportGoogleOAuth = require('../middelware/googleOAuth');
+
 const express = require('express');
 const path = require('path');
 const authController = require('../controllers/loginController');
