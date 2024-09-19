@@ -5,12 +5,12 @@ const path = require('path');
 
 const indexRouter = require('../../application/routes/indexRouter');
 const loginRouter = require('../../application/routes/loginRouter');
-const userRoutes = require('../../application/routes/userRoutes');
 const createAccountRouter = require('../../application/routes/createAccountRouter');
+const userRoutes = require('../../application/routes/userRoutes');
 const productRoutes = require('../../application/routes/userProductosRouter');
 const { jsonParseErrorHandler } = require('../middlewares/errorHandling');
 const { limiTotal } = require('../middlewares/rateLimit');
-
+//const userProductosRouter = require('../../application/routes/userProductosRouter')
 
 const createServer = () => {
     const app = express();

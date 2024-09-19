@@ -111,6 +111,8 @@ validateUserLogin = () => {
             })
         ];
     };
+
+    
 }
 
 module.exports = UserValidator;
