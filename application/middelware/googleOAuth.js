@@ -1,15 +1,16 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
+const User = require('../../domain/models/userModel')
 module.exports = (passport) => {
 
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    console.log(user);
+    done(null, user);
   });
 
   passport.deserializeUser(async (id, done) => {
     try{
-      console.log(id);
-      done(null, id);
+
+      done(null,id);
     } catch (err){
       done(err, null);
     }
@@ -23,8 +24,10 @@ module.exports = (passport) => {
     scope: ['profile', 'email']
   },async (accessToken, refreshToken, profile, done) => {
     try{
-      console.log("davidR10",profile);
-      done(null, profile);
+      let user = profile.json
+      user.provider = profile.provider;
+      delete profile.name
+      done(null, user);
     } catch (error){
       console.error('Error saving/updating user:',error);
       done(error, null);

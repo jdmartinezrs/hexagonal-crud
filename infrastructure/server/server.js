@@ -28,7 +28,7 @@ const createServer = () => {
     app.use('/login', sessionGoogleOAuth,passport.initialize(), passport.session(), loginRouter);
     app.use('/createAccount', createAccountRouter);
     app.use('/users', userRoutes);
-    app.use('/home', sessionGoogleOAuth,productRoutes);
+    app.use('/home', sessionGoogleOAuth, productRoutes);
     //app.use('/product');
 
     return app;

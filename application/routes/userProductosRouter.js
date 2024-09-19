@@ -2,14 +2,14 @@ const express = require('express');
 const path = require('path');
 const{auth, authCookie}= require('../middelware/authenticateToken')
 const sessionAuth = require('../../application/middelware/sessionLogin');
-const cookieParse = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const router = express.Router();
 
 router.get("v1.1.0", sessionAuth, auth,(req,res)=>{
     res.sendFile(path.join(process.env.EXPRESS_STATIC, "/views/home.html"))
 })
 
-router.get("v1.0.0", cookieParse(),authCookie,(req,res)=>{
+router.get("v1.0.0", cookieParser(),authCookie,(req,res)=>{
     res.sendFile(path.join(process.env.EXPRESS_STATIC, "/views/home.html"))
 })
 
