@@ -28,27 +28,7 @@ exports.googleAuthCallback = (req, res, next) => {
     })(req, res, next);
 };
 
-// exports.dashboard = (req,res)=>{
-//     if(!req.user){
-//         return res.redirect('/');
-//     }
-//     res.sendFile(path.join(__dirname, '../../public/views/dashboard.html'))
-// }
 
-
-// exports.getUserData = (req,res)=>{
-//     if(!req.user){
-//         console.log('no se encontró usuario en la solicitu');
-//         return res.status(401).json({error:'No autenticado'});
-//     }
-//     console.log('Datos del usuario',req.user);
-//     const userData={
-//         username: requestIdleCallback.user.username,
-//         email: req.user.email,
-//         id:req.user.googleId
-//     }
-//     res.json(userData);
-// };
 
 
 // exports.logout = (req, res, next)=>{
