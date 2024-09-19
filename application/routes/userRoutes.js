@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const UserController = require('../controllers/userController');
 const UserValidator = require('../validator/userValidator');
-
+const passport = require('passport');
 const cookieParser = require('cookie-parser')
 const {auth, authCookie}= require('../middelware/authenticateToken')
 const sessionAuth= require('../middelware/sessionLogin')
@@ -22,8 +22,8 @@ router.get('/:id',auth, userValidator.validateUserId(), (req, res) => userContro
 router.get('/search', auth, (req, res) => userController.searchUsers(req, res));
 
 router.post('/', userValidator.validateUserData(), (req, res) => userController.createUser(req, res));
-router.post('/login' ,versionMiddleware("1.1.0"),sessionAuth, userValidator.validateUserLogin(), (req, res) => userController.verifyUser(req, res));
-router.post('/login' ,versionMiddleware("1.0.0"), cookieParser(), userValidator.validateUserLogin(), (req, res) => userController.verifyUserCookies(req, res));
+router.post('/login', versionMiddleware("1.1.0"), sessionAuth, userValidator.validateUserLogin(), (req, res) => userController.verifyUser(req, res));
+router.post('/login', versionMiddleware("1.0.0"), cookieParser(), userValidator.validateUserLogin(), (req, res) => userController.verifyUserCookies(req, res));
 
 
 
