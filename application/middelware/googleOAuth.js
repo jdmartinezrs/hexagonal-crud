@@ -27,18 +27,32 @@ module.exports = (passport) => {
     try{
       
       let userInstance = new User();
+     let dataUser = [{
+      $match:{
+        email: profile._json.email
+      }
+    }];
+      let resAgregate = await userInstance.aggregate(dataUser);
      
-      let resAgregate = await userInstance.aggregate([{
-        $match:{
-          email: profile._json.email
-        }
-      }]);
-      if(resAgregate.length)return done(null, resAgregate);
-
-      //console.log(user);
-      let resInser = await userInstance.insert(profile._json)
+      let [user] = resAgregate
       
-      done(null,resInser);
+      if(resAgregate.length)return done(null, user);
+      let data = {
+        cedula: profile._json.sub,
+        names: profile._json.given_name,
+        surnames: profile._json.family_name,
+        nick: "Not Assigned",
+        email: profile._json.email,
+        phone: "123",
+        role:  "Usuario Estandar",
+        password: "Not Asigned"
+
+
+      }
+     
+      await userInstance.insert(data)
+      let userCreate = await userInstance.aggregate(dataUser);
+      done(null,userCreate);
     } catch (error){
       console.error('Error saving/updating user:',error);
       done(error, null);
