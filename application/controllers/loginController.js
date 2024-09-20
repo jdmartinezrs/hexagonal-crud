@@ -23,7 +23,7 @@ exports.googleAuthCallback = (req, res, next) => {
                 return next(err);
             }
             console.log('Usuario autenticado:', user);
-            return res.redirect('/views/home/v2.0.0');
+            return res.redirect('v2.0.0');
         });
     })(req, res, next);
 };

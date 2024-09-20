@@ -13,11 +13,13 @@ router.get("v1.0.0", cookieParser(),authCookie,(req,res)=>{
     res.sendFile(path.join(process.env.EXPRESS_STATIC, "views/home.html"))
 })
 
-router.get('/home', (req,res)=>{
+router.get("v2.0.0", (req,res)=>{
     console.log(req.session);
     
-    res.sendFile(path.join(process.env.EXPRESS_STATIC, "'/src/views/home.html'"))
+    res.sendFile(path.join(process.env.EXPRESS_STATIC, 'src/views/home.html'))
 })
 
 // router.post("/", (req,res)=>{})
 module.exports = router;
+
+

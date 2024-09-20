@@ -1,16 +1,17 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const User = require('../../domain/models/userModel')
+
 module.exports = (passport) => {
 
   passport.serializeUser((user, done) => {
-    console.log(user);
-  done(null, user);
+    done(null,user);
+  
   });
 
-  passport.deserializeUser(async (id, done) => {
+  passport.deserializeUser(async (user, done) => {
     try{
 
-      done(null,id);
+      done(null,user);
     } catch (err){
       done(err, null);
     }
@@ -24,9 +25,20 @@ module.exports = (passport) => {
     scope: ['profile', 'email']
   },async (accessToken, refreshToken, profile, done) => {
     try{
-      let user = profile._json;
-      user.provider = profile.provider;
-      done(null,user);
+      
+      let userInstance = new User();
+     
+      let resAgregate = await userInstance.aggregate([{
+        $match:{
+          email: profile._json.email
+        }
+      }]);
+      if(resAgregate.length)return done(null, resAgregate);
+
+      //console.log(user);
+      let resInser = await userInstance.insert(profile._json)
+      
+      done(null,resInser);
     } catch (error){
       console.error('Error saving/updating user:',error);
       done(error, null);
